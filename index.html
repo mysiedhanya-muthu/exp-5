@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript DOM and Events</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightblue;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: darkblue;
+        }
+
+        .box {
+            background-color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        input, select, button {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            background-color: darkblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: green;
+        }
+
+        #garden img {
+            width: 70px;
+            height: 70px;
+            margin: 5px;
+        }
+
+        #coin {
+            width: 100px;
+            height: 100px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        footer {
+            text-align: center;
+            background-color: darkblue;
+            color: white;
+            padding: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>JavaScript DOM Elements and Events</h1>
+
+<p>Name: DHANYA MYSIE</p>
+<p>Register No: UTK24CS1002</p>
+
+<!-- DOM Demonstration -->
+<div class="box">
+    <h2>DOM Elements</h2>
+
+    <p id="intro" class="intro">Welcome to JavaScript DOM.</p>
+    <p class="intro">This is another paragraph.</p>
+
+    <button onclick="showDOM()">Find HTML Elements</button>
+    <button onclick="changeText()">Change Text</button>
+
+    <p id="demo"></p>
+</div>
+
+<!-- Question 1 -->
+<div class="box">
+    <h2>1. Shortest and Longest Word</h2>
+
+    <input type="text" id="sentence"
+           value="Web Development Tutorial">
+
+    <button onclick="findWords()">Find Words</button>
+
+    <p id="wordResult"></p>
+</div>
+
+<!-- Question 2 -->
+<div class="box">
+    <h2>2. BMI Calculator</h2>
+
+    Weight (in kilograms):
+    <input type="number" id="weight" step="any"><br>
+
+    Height (in meters):
+    <input type="number" id="height" step="any"><br>
+
+    <button onclick="calculate()">Get BMI!</button>
+
+    <p>Your BMI is <span id="score"></span></p>
+    <p>Your body type is <span id="type"></span></p>
+</div>
+
+<!-- Question 3 -->
+<div class="box">
+    <h2>3. Fruit Farm</h2>
+
+    Rows:
+    <input type="number" id="rows" min="1">
+
+    Columns:
+    <input type="number" id="columns" min="1">
+
+    <button onclick="grow()">Plant Garden</button>
+
+    <div id="garden"></div>
+</div>
+
+<!-- Question 4 -->
+<div class="box">
+    <h2>4. Currency Converter</h2>
+
+    Convert
+    <input type="number" id="data" step="any">
+
+    <select id="from">
+        <option value="INR">Indian Rupee</option>
+        <option value="USD">US Dollar</option>
+    </select>
+
+    to
+
+    <select id="to">
+        <option value="USD">US Dollar</option>
+        <option value="INR">Indian Rupee</option>
+    </select>
+
+    <button onclick="convert()">Calculate</button>
+
+    <p id="answer"></p>
+</div>
+
+<!-- Question 5 -->
+<div class="box">
+    <h2>5. Coin Flip</h2>
+
+    <h3>Heads or Tails?</h3>
+
+    <img src="heads.jpg" id="coin" alt="Coin">
+
+    <br>
+
+    <button id="flip">Flip!</button>
+
+    <p>Heads Total: <span id="num_heads">0</span></p>
+    <p>Tails Total: <span id="num_tails">0</span></p>
+</div>
+
+<!-- Question 6 -->
+<div class="box">
+    <h2>6. Birthday Cake Order Form</h2>
+
+    Number of 1/2kg Cakes:
+    <input type="number" id="small" value="0" min="0"><br>
+
+    Number of 1kg Cakes:
+    <input type="number" id="medium" value="0" min="0"><br>
+
+    Number of 2kg Cakes:
+    <input type="number" id="large" value="0" min="0"><br>
+
+    Tip:
+
+    <label>
+        <input type="radio" value="10" name="tip">
+        10%
+    </label>
+
+    <label>
+        <input type="radio" value="15" name="tip" checked>
+        15%
+    </label>
+
+    <label>
+        <input type="radio" value="20" name="tip">
+        20%
+    </label>
+
+    <br>
+
+    <button id="submit">Calculate Order</button>
+
+    <p>Cost of order: Rs. <span id="price">0</span></p>
+</div>
+
+<footer>
+    DHANYA MYSIE | UTK24CS1002
+</footer>
+
+<script>
+
+// DOM Demonstration
+function showDOM() {
+    var a = document.getElementById("intro");
+    var b = document.getElementsByTagName("p");
+    var c = document.getElementsByClassName("intro");
+    var d = document.querySelectorAll("p.intro");
+
+    document.getElementById("demo").innerHTML =
+        "By ID: " + a.innerHTML +
+        "<br>By Tag Name: " + b.length +
+        "<br>By Class Name: " + c.length +
+        "<br>By CSS Selector: " + d.length;
+}
+
+function changeText() {
+    document.getElementById("intro").innerHTML = "Karunya University";
+}
+
+// Question 1: Shortest and Longest Word
+function findWords() {
+    var str = document.getElementById("sentence").value;
+    var words = str.trim().split(/\s+/);
+
+    var shortest = words[0];
+    var longest = words[0];
+
+    for (var i = 0; i < words.length; i++) {
+        if (words[i].length < shortest.length) {
+            shortest = words[i];
+        }
+
+        if (words[i].length > longest.length) {
+            longest = words[i];
+        }
+    }
+
+    document.getElementById("wordResult").innerHTML =
+        "Shortest: " + shortest +
+        "<br>Longest: " + longest;
+}
+
+// Question 2: BMI Calculator
+function calculate() {
+    var weight = parseFloat(
+        document.getElementById("weight").value
+    );
+
+    var height = parseFloat(
+        document.getElementById("height").value
+    );
+
+    var bmi = weight / (height * height);
+    var bodyType;
+
+    if (bmi < 18) {
+        bodyType = "Underweight";
+    }
+    else if (bmi <= 25) {
+        bodyType = "Normal";
+    }
+    else if (bmi <= 30) {
+        bodyType = "Overweight";
+    }
+    else {
+        bodyType = "Obese";
+    }
+
+    document.getElementById("score").innerHTML =
+        bmi.toFixed(2);
+
+    document.getElementById("type").innerHTML =
+        bodyType;
+}
+
+// Question 3: Fruit Farm
+function grow() {
+    var rows = parseInt(
+        document.getElementById("rows").value
+    );
+
+    var columns = parseInt(
+        document.getElementById("columns").value
+    );
+
+    var garden = document.getElementById("garden");
+    var fruits = ["Apple.jpg", "Orange.jpg"];
+
+    garden.innerHTML = "";
+
+    for (var i = 0; i < rows; i++) {
+        for (var j = 0; j < columns; j++) {
+
+            var number = Math.floor(Math.random() * 2);
+
+            garden.innerHTML +=
+                '<img src="' + fruits[number] +
+                '" width="100" height="100" alt="Fruit">';
+        }
+
+        garden.innerHTML += "<br>";
+    }
+}
+
+// Question 4: Currency Converter
+function convert() {
+    var amount = parseFloat(
+        document.getElementById("data").value
+    );
+
+    var from = document.getElementById("from").value;
+    var to = document.getElementById("to").value;
+
+    var result;
+
+    if (from == "INR" && to == "USD") {
+        result = amount * 0.015;
+    }
+    else if (from == "USD" && to == "INR") {
+        result = amount * 67.12;
+    }
+    else {
+        result = amount;
+    }
+
+    document.getElementById("answer").innerHTML =
+        result.toFixed(2) + " " + to;
+}
+
+// Question 5: Coin Flip
+var heads = 0;
+var tails = 0;
+
+document.getElementById("flip").addEventListener(
+    "click", flipFunction
+);
+
+function flipFunction() {
+    var number = Math.floor(Math.random() * 2);
+
+    if (number == 0) {
+        document.getElementById("coin").src = "heads.jpg";
+        heads++;
+    }
+    else {
+        document.getElementById("coin").src = "tails.jpg";
+        tails++;
+    }
+
+    document.getElementById("num_heads").innerHTML = heads;
+    document.getElementById("num_tails").innerHTML = tails;
+}
+
+// Question 6: Birthday Cake Order Form
+document.getElementById("submit").addEventListener(
+    "click", calculateOrder
+);
+
+function calculateOrder() {
+    var small = parseInt(
+        document.getElementById("small").value
+    );
+
+    var medium = parseInt(
+        document.getElementById("medium").value
+    );
+
+    var large = parseInt(
+        document.getElementById("large").value
+    );
+
+    var tip = parseFloat(
+        document.querySelector('input[name="tip"]:checked').value
+    );
+
+    var total = (small * 100) + (medium * 200) + (large * 400);
+
+    var tax = total * 0.09;
+    var afterTax = total + tax;
+
+    var tipAmount = afterTax * tip / 100;
+
+    var finalPrice = afterTax + tipAmount;
+
+    document.getElementById("price").innerHTML =
+        finalPrice.toFixed(2);
+}
+
+</script>
+
+</body>
+</html>
